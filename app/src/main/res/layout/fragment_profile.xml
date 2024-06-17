@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.main.fragments.ProfileFragment">
+
+    <TextView
+        android:id="@+id/profile_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/my_profile"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="16dp"
+        android:layout_marginTop="20dp"
+        style="@style/Base.Theme.LoginWithAnimation"/>
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:src="@drawable/avatar" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/profile_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textStyle="bold"
+            style="@style/CustomTextViewStyle"/>
+        <TextView
+            android:id="@+id/profile_email_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="boedi@gmail.com"
+            style="@style/CustomTextViewStyle" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <TextView
+            android:id="@+id/profile_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textStyle="bold"
+            style="@style/CustomTextViewStyle"/>
+        <TextView
+            android:id="@+id/profile_username_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Arsenius"
+            style="@style/CustomTextViewStyle" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/profile_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Age"
+            android:textStyle="bold"
+            style="@style/CustomTextViewStyle" />
+        <TextView
+            android:id="@+id/profile_age_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="11"
+            style="@style/CustomTextViewStyle" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/profile_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Weight"
+            android:textStyle="bold"
+            style="@style/CustomTextViewStyle" />
+        <TextView
+            android:id="@+id/profile_weight_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="90kg"
+            style="@style/CustomTextViewStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/profile_height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Height"
+            android:textStyle="bold"
+            style="@style/CustomTextViewStyle" />
+        <TextView
+            android:id="@+id/profile_height_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="170cm"
+            style="@style/CustomTextViewStyle" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center">
+        <Button
+            android:id="@+id/button_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:textColor="@color/white"
+            style="@style/CustomTextViewStyle" />
+        <Button
+            android:id="@+id/button_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="Clear Local"
+            android:textColor="@color/white"
+            style="@style/CustomTextViewStyle" />
+
+    </LinearLayout>
+</LinearLayout>

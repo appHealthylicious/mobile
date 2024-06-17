@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.LoginWithAnimation" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
+
+    <style name="Theme.LoginWithAnimation" parent="Base.Theme.LoginWithAnimation" />
+    <style name="Regular">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+    <style name="Bold">
+        <item name="android:fontFamily">@font/poppinsbold</item>
+    </style>
+    <style name="Medium">
+        <item name="android:fontFamily">@font/poppinsmedium</item>
+    </style>
+</resources>

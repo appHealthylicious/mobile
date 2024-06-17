@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="chip_item_width">100dp</dimen>
+      <dimen name="fab_margin">16dp</dimen>
+   </resources>
