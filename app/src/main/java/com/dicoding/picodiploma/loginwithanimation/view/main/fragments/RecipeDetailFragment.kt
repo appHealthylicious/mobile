@@ -1,9 +1,11 @@
 package com.dicoding.picodiploma.loginwithanimation.view.main.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ScrollView
@@ -38,6 +40,9 @@ class RecipeDetailFragment : Fragment() {
     private lateinit var btnToggle: ImageButton
     private lateinit var saveRecipeText: String
     private lateinit var textRecipeID: TextView
+    private lateinit var rateButton: Button
+    private lateinit var recipeId: String
+    private var recipeName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -60,6 +65,7 @@ class RecipeDetailFragment : Fragment() {
         textDuration = view.findViewById(R.id.text_duration)
         btnToggle = view.findViewById(R.id.toggleButton)
         textRecipeID = view.findViewById(R.id.text_recipe_id)
+        rateButton = view.findViewById(R.id.button_rate)
 
         progressBar.visibility = View.VISIBLE
         scrollView.visibility = View.GONE
@@ -105,7 +111,9 @@ class RecipeDetailFragment : Fragment() {
             }
             btnToggle.isSelected = !isSelected
         }
-
+        rateButton.setOnClickListener {
+            showRatingDialog()
+        }
         return view
     }
     private fun bindDetails(details: RecipeDetailsResponseItem){
@@ -115,7 +123,41 @@ class RecipeDetailFragment : Fragment() {
         textCalorie.text = details.nutrients?.calories
         textDuration.text = "${details.totalTime} mins"
         textRecipeID.text = "RecipeID : ${details.recipeId}"
+        recipeId = details.recipeId ?: ""
+        recipeName = "Rate recipe: ${details.title}" ?: ""
 
+    }
+
+    private fun showRatingDialog(){
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.layout_rate_recipe, null)
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+        val stars = listOf(
+            dialogView.findViewById<ImageView>(R.id.star1),
+            dialogView.findViewById<ImageView>(R.id.star2),
+            dialogView.findViewById<ImageView>(R.id.star3),
+            dialogView.findViewById<ImageView>(R.id.star4),
+            dialogView.findViewById<ImageView>(R.id.star5)
+        )
+
+        var selectedRating = 0
+
+        stars.forEachIndexed { index, imageView ->
+            imageView.setOnClickListener {
+                selectedRating = index + 1
+                stars.forEachIndexed { starIndex, starImageView ->
+                    starImageView.setImageResource(if (starIndex < selectedRating) R.drawable.star_yellow else R.drawable.star_grey)
+                }
+            }
+        }
+
+        dialogView.findViewById<Button>(R.id.button_submit).setOnClickListener {
+            viewModel.postRating(recipeId, selectedRating.toString())
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
     }
 
     companion object {
@@ -125,4 +167,5 @@ class RecipeDetailFragment : Fragment() {
             }
         }
     }
+
 }

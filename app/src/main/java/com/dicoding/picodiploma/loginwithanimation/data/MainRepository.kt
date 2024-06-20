@@ -5,6 +5,7 @@ import com.dicoding.picodiploma.loginwithanimation.data.dataclass.DislikeRespons
 import com.dicoding.picodiploma.loginwithanimation.data.pref.UserModel
 import com.dicoding.picodiploma.loginwithanimation.data.pref.UserPreference
 import com.dicoding.picodiploma.loginwithanimation.data.response.IngredientResponseItem
+import com.dicoding.picodiploma.loginwithanimation.data.response.RatingResponse
 import com.dicoding.picodiploma.loginwithanimation.data.response.RecipeDetailsResponseItem
 import com.dicoding.picodiploma.loginwithanimation.data.response.RecipeGenerateResponseItem
 import com.dicoding.picodiploma.loginwithanimation.data.response.RecipeSearchResponseItem
@@ -263,6 +264,22 @@ class MainRepository private constructor (
 
             override fun onFailure(call: Call<List<String>>, t: Throwable) {
                 println("GET DISLIKES ERROR RESPONSE")
+            }
+
+        })
+    }
+
+    fun postRating(recipeId: String, rating: String){
+        apiService.postRating(recipeId, rating).enqueue(object: Callback<RatingResponse>{
+            override fun onResponse(
+                call: Call<RatingResponse>,
+                response: Response<RatingResponse>
+            ) {
+                println("Success recipeID: $recipeId, rating $rating")
+            }
+
+            override fun onFailure(call: Call<RatingResponse>, t: Throwable) {
+                println("Failed rating")
             }
 
         })

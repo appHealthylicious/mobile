@@ -1,11 +1,17 @@
 package com.dicoding.picodiploma.loginwithanimation.view.main.fragments
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,7 +31,7 @@ class IngredientSearchFragment : Fragment() {
     private lateinit var progressBar: View
     private lateinit var recyclerView: RecyclerView
     private lateinit var emptyMessage: View
-    private lateinit var searchView: androidx.appcompat.widget.SearchView
+    private lateinit var searchEditText: EditText
     private lateinit var searchCount: TextView
     private val handler = Handler(Looper.getMainLooper())
     private var searchRunnable: Runnable? = null
@@ -34,6 +40,7 @@ class IngredientSearchFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,28 +50,26 @@ class IngredientSearchFragment : Fragment() {
         recyclerView = view.findViewById(R.id.pantry_earch_recycler_view)
         progressBar = view.findViewById(R.id.progressBar)
         emptyMessage = view.findViewById(R.id.emptyMessage)
-        searchView = view.findViewById(R.id.searchView)
+        searchEditText = view.findViewById(R.id.search_edit_text)
         searchCount = view.findViewById(R.id.search_count)
 
         val staggeredGridLayoutManager = StaggeredGridLayoutManager(7, StaggeredGridLayoutManager.HORIZONTAL)
         recyclerView.layoutManager = staggeredGridLayoutManager
 
-        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                searchView.clearFocus()
-                return true
-            }
+        searchEditText.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onQueryTextChange(newText: String?): Boolean {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 searchRunnable?.let { handler.removeCallbacks(it) }
                 searchRunnable = Runnable {
-                    newText?.let {
-                        performSearch(it)
+                    s?.let {
+                        performSearch(it.toString())
                     }
                 }
-                handler.postDelayed(searchRunnable!!, 300) // 300ms debounce time
-                return true
+                handler.postDelayed(searchRunnable!!, 300)
             }
+
+            override fun afterTextChanged(s: Editable?) {}
         })
 
         viewModel.ingredientsSearchResults().observe(viewLifecycleOwner) { searchResults ->
@@ -98,6 +103,16 @@ class IngredientSearchFragment : Fragment() {
                 recyclerView.visibility = View.GONE
             }
         }
+        view.findViewById<ViewGroup>(R.id.parent_layout).setOnTouchListener { _, _ ->
+            searchEditText.clearFocus()
+            false
+        }
+
+        searchEditText.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                v.hideKeyboard()
+            }
+        }
 
         return view
     }
@@ -106,6 +121,10 @@ class IngredientSearchFragment : Fragment() {
         emptyMessage.visibility = View.GONE
         recyclerView.visibility = View.GONE
         viewModel.searchIngredients(query)
+    }
+    private fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
 }

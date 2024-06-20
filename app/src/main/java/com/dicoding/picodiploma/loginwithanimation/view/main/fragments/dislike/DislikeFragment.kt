@@ -1,5 +1,7 @@
 package com.dicoding.picodiploma.loginwithanimation.view.main.fragments.dislike
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,6 +10,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -46,6 +49,7 @@ class DislikeFragment: Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -133,6 +137,16 @@ class DislikeFragment: Fragment() {
             }
         }
 
+        view.findViewById<ViewGroup>(R.id.parent_layout).setOnTouchListener { _, _ ->
+            searchEditText.clearFocus()
+            false
+        }
+
+        searchEditText.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                v.hideKeyboard()
+            }
+        }
         return view
     }
     private fun setupSearchEditText() {
@@ -157,5 +171,9 @@ class DislikeFragment: Fragment() {
         searchEmpty.visibility = View.GONE
         searchRecyclerView.visibility = View.GONE
         viewModel.searchIngredients(query)
+    }
+    private fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }

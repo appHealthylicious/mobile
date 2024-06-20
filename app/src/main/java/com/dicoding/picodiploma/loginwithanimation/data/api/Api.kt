@@ -4,6 +4,7 @@ import com.dicoding.picodiploma.loginwithanimation.data.dataclass.DislikeRespons
 import com.dicoding.picodiploma.loginwithanimation.data.response.IngredientResponseItem
 import com.dicoding.picodiploma.loginwithanimation.data.response.LoginResponse
 import com.dicoding.picodiploma.loginwithanimation.data.response.ProfileResponse
+import com.dicoding.picodiploma.loginwithanimation.data.response.RatingResponse
 import com.dicoding.picodiploma.loginwithanimation.data.response.RecipeDetailsResponseItem
 import com.dicoding.picodiploma.loginwithanimation.data.response.RecipeGenerateResponseItem
 import com.dicoding.picodiploma.loginwithanimation.data.response.RecipeSearchResponseItem
@@ -87,4 +88,11 @@ interface Api {
 
     @GET("user/dislikes")
     fun getDislikes(): Call<List<String>>
+
+    @FormUrlEncoded
+    @POST("rate")
+    fun postRating(
+        @Field("recipeId") recipeId: String,
+        @Field("rating") rating: String
+    ): Call<RatingResponse>
 }

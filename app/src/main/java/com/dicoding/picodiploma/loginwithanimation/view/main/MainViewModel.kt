@@ -130,6 +130,12 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
         }
     }
 
+    fun postRating(recipeId: String, rating: String){
+        viewModelScope.launch {
+            repository.postRating(recipeId, rating)
+        }
+    }
+
     fun getDislikes(){
         viewModelScope.launch {
             repository.getDislikes()
