@@ -1,6 +1,7 @@
 package com.dicoding.picodiploma.loginwithanimation.data
 
 import com.dicoding.picodiploma.loginwithanimation.data.api.Api
+import com.dicoding.picodiploma.loginwithanimation.data.dataclass.DislikeResponse
 import com.dicoding.picodiploma.loginwithanimation.data.pref.UserModel
 import com.dicoding.picodiploma.loginwithanimation.data.pref.UserPreference
 import com.dicoding.picodiploma.loginwithanimation.data.response.IngredientResponseItem
@@ -8,6 +9,7 @@ import com.dicoding.picodiploma.loginwithanimation.data.response.RecipeDetailsRe
 import com.dicoding.picodiploma.loginwithanimation.data.response.RecipeGenerateResponseItem
 import com.dicoding.picodiploma.loginwithanimation.data.response.RecipeSearchResponseItem
 import com.dicoding.picodiploma.loginwithanimation.data.response.RecipesRecommendationResponse
+import com.dicoding.picodiploma.loginwithanimation.data.response.RecommendationByRateResponseItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import retrofit2.Call
@@ -35,6 +37,12 @@ class MainRepository private constructor (
 
     private val _recipeGenerateResults = MutableStateFlow<List<RecipeGenerateResponseItem>?>(null)
     val recipeGenerateResults: Flow<List<RecipeGenerateResponseItem>?> get() = _recipeGenerateResults
+
+    private val _recipeRecommendations = MutableStateFlow<List<RecommendationByRateResponseItem>?>(null)
+    val recipeRecommendations: Flow<List<RecommendationByRateResponseItem>?> get() = _recipeRecommendations
+
+    private val _getDislikes = MutableStateFlow<List<String>?>(null)
+    val getDislikesData: Flow<List<String>?> get() = _getDislikes
 
     suspend fun logout() {
         userPreference.logout()
@@ -159,6 +167,16 @@ class MainRepository private constructor (
     suspend fun deleteIngredient(ingredientId: String) {
         userPreference.deleteIngredient(ingredientId)
     }
+
+    fun getDislikeIngredients(): Flow<List<String>> {
+        return userPreference.getDislikeIngredients()
+    }
+    suspend fun addDislikeIngredient(ingredientId: String){
+        userPreference.addDislikeIngredient(ingredientId)
+    }
+    suspend fun deleteDislikeIngredient(ingredientId: String){
+        userPreference.removeDislikeIngredient(ingredientId)
+    }
     fun fetchIngredientsFromApi() {
         apiService.getIngredientsApi().enqueue(object : Callback<List<IngredientResponseItem>>{
             override fun onResponse(
@@ -199,6 +217,55 @@ class MainRepository private constructor (
 
         })
 
+    }
+    fun getRecommendationbyRate(){
+        apiService.getRecommendationsbyRate().enqueue(object: Callback<List<RecommendationByRateResponseItem>>{
+            override fun onResponse(
+                call: Call<List<RecommendationByRateResponseItem>>,
+                response: Response<List<RecommendationByRateResponseItem>>
+            ) {
+                if(response.isSuccessful){
+                    _recipeRecommendations.value = response.body()
+                    println(response.body())
+                } else {
+                    _recipeRecommendations.value = emptyList()
+                    println("RECIPE RECOMMENDATION VALUE FAILED")
+                }
+            }
+
+            override fun onFailure(call: Call<List<RecommendationByRateResponseItem>>, t: Throwable) {
+                _recipeRecommendations.value = emptyList()
+                println("RECIPE RECOMMENDATION RESPONSE FAILED")
+            }
+
+        })
+    }
+
+    fun postDislikes(ingredients: List<String>){
+        apiService.postDislikes(ingredients).enqueue(object: Callback<DislikeResponse>{
+            override fun onResponse(call: Call<DislikeResponse>, response: Response<DislikeResponse>) {
+                println(response.body()?.message)
+            }
+
+            override fun onFailure(call: Call<DislikeResponse>, t: Throwable) {
+                println("Failed dislike post")
+            }
+
+        })
+    }
+
+    fun getDislikes(){
+        apiService.getDislikes().enqueue(object: Callback<List<String>>{
+            override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
+                _getDislikes.value = response.body()
+                println("GET DISLIKES: ${response.body()}")
+            }
+
+            override fun onFailure(call: Call<List<String>>, t: Throwable) {
+                println("GET DISLIKES ERROR RESPONSE")
+            }
+
+        })
     }
 
     companion object {

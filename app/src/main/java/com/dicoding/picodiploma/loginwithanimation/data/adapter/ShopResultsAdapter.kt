@@ -45,4 +45,9 @@ class ShopResultsAdapter(
             holder.bind(it)
         }
     }
+
+    fun updateData(newList: List<RecipeGenerateResponseItem>){
+        results = newList
+        notifyDataSetChanged()
+    }
 }

@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx) // untuk lifecycleScope
     implementation(libs.retrofit2.kotlin.coroutines.adapter)
     implementation(libs.glide.v4120)
+    implementation(libs.androidx.core.splashscreen)
 
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.core.ktx)

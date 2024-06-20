@@ -43,7 +43,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:contentDescription="@string/ic_healtylicious"
-                android:src="@drawable/ic_healtylicious"
+                android:src="@drawable/logo_splash"
                 tools:ignore="ImageContrastCheck" />
 
             <TextView

@@ -123,9 +123,8 @@
                     tools:listitem="@layout/list_ingredient_basket" />
 
             </LinearLayout>
-
-
         </com.google.android.material.card.MaterialCardView>
+
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"
@@ -161,12 +160,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="0dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/results_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     tools:listitem="@layout/list_recipe_search"/>
             </ScrollView>
 

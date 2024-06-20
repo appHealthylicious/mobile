@@ -22,6 +22,8 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
     fun getIngredients() = repository.ingredients.asLiveData()
     fun getRecipesRecommendation() = repository.recipes.asLiveData()
     fun getGeneratedRecipes() = repository.recipeGenerateResults.asLiveData()
+    fun getRecipeRecommendationByRate() = repository.recipeRecommendations.asLiveData()
+    fun getDislikesData() = repository.getDislikesData.asLiveData()
 
     fun logout() {
         viewModelScope.launch {
@@ -73,6 +75,11 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
             repository.generateRecipe(ingredients)
         }
     }
+    fun getRecommendationsByRate(){
+        viewModelScope.launch {
+            repository.getRecommendationbyRate()
+        }
+    }
 
 
     //TODO Ingredients
@@ -99,6 +106,33 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
     fun searchIngredients(query: String){
         viewModelScope.launch {
             repository.searchIngredients(query)
+        }
+    }
+    fun getDislikeIngredients(): LiveData<List<String>> {
+        return repository.getDislikeIngredients().asLiveData()
+    }
+    fun addDislikeIngredient(ingredientId: String){
+        viewModelScope.launch {
+            repository.addDislikeIngredient(ingredientId)
+            println("Added dislike ingredient: $ingredientId")
+        }
+    }
+    fun deleteDislikeIngredient(ingredientId: String){
+        viewModelScope.launch {
+            repository.deleteDislikeIngredient(ingredientId)
+            println("Removed dislike ingredient: $ingredientId")
+        }
+    }
+
+    fun postDislikes(ingredients: List<String>){
+        viewModelScope.launch {
+            repository.postDislikes(ingredients)
+        }
+    }
+
+    fun getDislikes(){
+        viewModelScope.launch {
+            repository.getDislikes()
         }
     }
 

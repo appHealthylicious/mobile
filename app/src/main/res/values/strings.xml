@@ -119,6 +119,7 @@
     <string name="chicken_strips">Chicken Strips</string>
     <string name="get_recipes">Get Recipes</string>
     <string name="_100_ingredients_available">100 ingredients available</string>
+    <string name="input_search_above">Input search above.</string>
 
 
     <string-array name="menu_data_title">

@@ -11,10 +11,10 @@ data class RecipesRecommendationResponse(
 data class RecommendationItem(
 
 	@field:SerializedName("recipes")
-	val recipes: List<RecipesItem?>? = null,
+	var recipes: MutableList<RecipesItem?>? = null,
 
 	@field:SerializedName("category")
-	val category: String? = null
+	var category: String? = null
 )
 
 data class RecipesItem(

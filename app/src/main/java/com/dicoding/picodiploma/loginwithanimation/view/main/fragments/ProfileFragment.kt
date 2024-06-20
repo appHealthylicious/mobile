@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.dicoding.picodiploma.loginwithanimation.R
 import com.dicoding.picodiploma.loginwithanimation.view.MainModelFactory
+import com.dicoding.picodiploma.loginwithanimation.view.main.MainActivity
 import com.dicoding.picodiploma.loginwithanimation.view.main.MainViewModel
+import com.dicoding.picodiploma.loginwithanimation.view.main.fragments.dislike.DislikeFragment
 
 class ProfileFragment : Fragment() {
 
@@ -32,6 +34,8 @@ class ProfileFragment : Fragment() {
         val heightTextView: TextView = view.findViewById(R.id.profile_height_value)
         val logoutButton: Button = view.findViewById(R.id.button_logout)
         val resetButton: Button = view.findViewById(R.id.button_clear)
+        val dislikeButton: Button = view.findViewById(R.id.button_update_dislike)
+        val profileDislikesValue: TextView = view.findViewById(R.id.profile_dislikes_value)
 
         viewModel.getSession().observe(viewLifecycleOwner) { user ->
             emailTextView.text = user.email
@@ -41,6 +45,14 @@ class ProfileFragment : Fragment() {
             heightTextView.text = user.extraInfo.height + " cm"
         }
 
+        viewModel.getDislikes()
+
+        viewModel.getDislikesData().observe(viewLifecycleOwner){item ->
+            val stringItem = item?.joinToString(", ")
+            profileDislikesValue.text = stringItem
+
+        }
+
         logoutButton.setOnClickListener {
             viewModel.logout()
         }
@@ -48,6 +60,15 @@ class ProfileFragment : Fragment() {
         resetButton.setOnClickListener {
             viewModel.getReset()
             Toast.makeText(requireContext(), "Reset local data successful", Toast.LENGTH_LONG).show()
+        }
+
+        dislikeButton.setOnClickListener {
+            val fragment = DislikeFragment()
+            (activity as? MainActivity)?.hideBack()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .addToBackStack(null)
+                .commit()
         }
 
         return view

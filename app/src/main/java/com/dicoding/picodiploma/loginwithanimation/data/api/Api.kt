@@ -1,5 +1,6 @@
 package com.dicoding.picodiploma.loginwithanimation.data.api
 
+import com.dicoding.picodiploma.loginwithanimation.data.dataclass.DislikeResponse
 import com.dicoding.picodiploma.loginwithanimation.data.response.IngredientResponseItem
 import com.dicoding.picodiploma.loginwithanimation.data.response.LoginResponse
 import com.dicoding.picodiploma.loginwithanimation.data.response.ProfileResponse
@@ -7,9 +8,11 @@ import com.dicoding.picodiploma.loginwithanimation.data.response.RecipeDetailsRe
 import com.dicoding.picodiploma.loginwithanimation.data.response.RecipeGenerateResponseItem
 import com.dicoding.picodiploma.loginwithanimation.data.response.RecipeSearchResponseItem
 import com.dicoding.picodiploma.loginwithanimation.data.response.RecipesRecommendationResponse
+import com.dicoding.picodiploma.loginwithanimation.data.response.RecommendationByRateResponseItem
 import com.dicoding.picodiploma.loginwithanimation.data.response.RegisterResponse
 import com.dicoding.picodiploma.loginwithanimation.data.response.UpdateResponse
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -73,4 +76,15 @@ interface Api {
     fun generateRecipe(
         @Field("ingredients") ingredients: String
     ): Call<List<RecipeGenerateResponseItem>>
+
+    @GET("rate/recommendations")
+    fun getRecommendationsbyRate(): Call<List<RecommendationByRateResponseItem>>
+
+    @POST("user/dislikes")
+    fun postDislikes(
+        @Body ingredients: List<String>
+    ): Call<DislikeResponse>
+
+    @GET("user/dislikes")
+    fun getDislikes(): Call<List<String>>
 }

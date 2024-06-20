@@ -42,7 +42,7 @@
                 android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/ic_healtylicious"
+                android:background="@drawable/logo_splash"
                 android:contentDescription="@string/ic_healtylicious"
                 tools:ignore="ImageContrastCheck" />
 
@@ -155,6 +155,7 @@
                 android:textSize="17sp"
                 tools:ignore="TextContrastCheck" />
 
+            <!--
             <LinearLayout
                 android:id="@+id/linearLayout_or_login_with"
                 android:layout_width="match_parent"
@@ -198,6 +199,7 @@
             </LinearLayout>
 
             <FrameLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="20dp"
@@ -264,7 +266,7 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
-
+            -->
         </LinearLayout>
     </ScrollView>
 

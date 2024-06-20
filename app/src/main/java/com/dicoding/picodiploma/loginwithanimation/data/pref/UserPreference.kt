@@ -108,6 +108,25 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
+    fun getDislikeIngredients(): Flow<List<String>>{
+        return dataStore.data.map { preferences ->
+            preferences[DISLIKE_INGREDIENTS_KEY]?.split(",")?.filter { it.isNotEmpty() } ?: emptyList()
+        }
+    }
+    suspend fun addDislikeIngredient(ingredientId: String) {
+        dataStore.edit {preferences ->
+            val currentDislikes = preferences[DISLIKE_INGREDIENTS_KEY]?.split(",")?.toMutableList() ?: mutableListOf()
+            currentDislikes.add(ingredientId)
+            preferences[DISLIKE_INGREDIENTS_KEY] = currentDislikes.joinToString(",")
+        }
+    }
+    suspend fun removeDislikeIngredient(ingredientId: String) {
+        dataStore.edit {preferences ->
+            val currentDislikes = preferences[DISLIKE_INGREDIENTS_KEY]?.split(",")?.toMutableList() ?: mutableListOf()
+            currentDislikes.remove(ingredientId)
+            preferences[DISLIKE_INGREDIENTS_KEY] = currentDislikes.joinToString(",")
+        }
+    }
 
     // RESET
     suspend fun resetFavouriteRecipes() {
@@ -119,6 +138,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     suspend fun resetBasketIngredients() {
         dataStore.edit { preferences ->
             preferences[BASKET_INGREDIENTS_KEY] = ""
+            preferences[DISLIKE_INGREDIENTS_KEY] = ""
         }
     }
 
@@ -136,6 +156,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         private val HEIGHT_KEY = stringPreferencesKey("height")
         private val FAVORITE_RECIPES_KEY = stringPreferencesKey("favorite_recipes")
         private val BASKET_INGREDIENTS_KEY = stringPreferencesKey("cart_ingredients")
+        private val DISLIKE_INGREDIENTS_KEY = stringPreferencesKey("dislike_ingredients")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

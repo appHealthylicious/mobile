@@ -17,6 +17,7 @@ import com.dicoding.picodiploma.loginwithanimation.R
 import com.dicoding.picodiploma.loginwithanimation.data.adapter.ItemShopAdapter
 import com.dicoding.picodiploma.loginwithanimation.data.adapter.ShopResultsAdapter
 import com.dicoding.picodiploma.loginwithanimation.view.MainModelFactory
+import com.dicoding.picodiploma.loginwithanimation.view.main.MainActivity
 import com.dicoding.picodiploma.loginwithanimation.view.main.MainViewModel
 
 class ShopFragment : Fragment() {
@@ -72,6 +73,7 @@ class ShopFragment : Fragment() {
 
         viewModel.getGeneratedRecipes().observe(viewLifecycleOwner){results ->
             progressBar.visibility = View.GONE
+            resultsRecyclerView.visibility = View.VISIBLE
             resultsRecyclerView.adapter = ShopResultsAdapter(results) { recipeTitle ->
                 navigateToRecipeDetails(recipeTitle)
             }
@@ -80,6 +82,7 @@ class ShopFragment : Fragment() {
 
         generateRecipeButton.setOnClickListener {
             progressBar.visibility = View.VISIBLE
+            resultsRecyclerView.visibility = View.GONE
             viewModel.generateRecipe(ingredientsList)
         }
 
@@ -108,6 +111,7 @@ class ShopFragment : Fragment() {
     }
     private fun navigateToRecipeDetails(recipeTitle: String) {
         val fragment = RecipeDetailFragment.newInstance(recipeTitle)
+        (activity as? MainActivity)?.hideProfile()
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.frame_layout, fragment)
             .addToBackStack(null)
