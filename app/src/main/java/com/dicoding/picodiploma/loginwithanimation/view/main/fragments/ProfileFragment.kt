@@ -48,8 +48,17 @@ class ProfileFragment : Fragment() {
         viewModel.getDislikes()
 
         viewModel.getDislikesData().observe(viewLifecycleOwner){item ->
-            val stringItem = item?.joinToString(", ")
-            profileDislikesValue.text = stringItem
+            if (item != null) {
+                if(item.isEmpty()){
+                    profileDislikesValue.text = "no dislikes"
+
+                } else {
+                    val stringItem = item?.joinToString(", ")
+                    profileDislikesValue.text = stringItem
+
+                }
+
+            }
 
         }
 
