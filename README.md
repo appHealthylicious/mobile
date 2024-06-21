@@ -1,5 +1,5 @@
 
-![Healthylicious](https://storage.googleapis.com/healthylicious-assets/Healthylicious_page-0018.jpg)
+![Healthylicious]([https://storage.googleapis.com/healthylicious-assets/Healthylicious_page-0018.jpg](https://storage.googleapis.com/healthylicious-assets/Healthylicious_page-0019.jpg))
 ## Healthylicious - Mobile Development
 Healthylicious is a mobile application designed to promote healthier eating habits by providing personalized meal recommendations based on users' dietary preferences and available ingredients. The app leverages advanced machine learning algorithms to analyze user input and suggest nutritious recipes that can be easily prepared at home. By integrating cloud computing and mobile development, Healthylicious ensures a seamless and user-friendly experience, making it easier for individuals to make informed dietary choices and embrace a balanced diet. Whether you are looking to lose weight, manage a health condition, or simply eat more nutritious foods, Healthylicious is your go-to companion for a healthier lifestyle.
 
