@@ -10,12 +10,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.dicoding.picodiploma.loginwithanimation.data.pref.UserModel
 import com.dicoding.picodiploma.loginwithanimation.data.response.LoginResponse
 import com.dicoding.picodiploma.loginwithanimation.databinding.ActivityLoginBinding
 import com.dicoding.picodiploma.loginwithanimation.view.ViewModelFactory
 import com.dicoding.picodiploma.loginwithanimation.view.extrainfo.ExtraInfoActivity
-import com.dicoding.picodiploma.loginwithanimation.view.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel by viewModels<LoginViewModel> {
@@ -88,8 +86,8 @@ class LoginActivity : AppCompatActivity() {
     private fun showSuccessDialog() {
         AlertDialog.Builder(this).apply {
             setTitle("Yeah!")
-            setMessage("Anda berhasil login.")
-            setPositiveButton("Oke bro") { _, _ ->
+            setMessage("You have successfully logged in.")
+            setPositiveButton("Continue") { _, _ ->
                 val intent = Intent(context, ExtraInfoActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
@@ -103,9 +101,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showFailDialog(message: String) {
         AlertDialog.Builder(this).apply {
-            setTitle("Tidak!")
-            setMessage("${message}. Silahkan coba lagi!")
-            setPositiveButton("Oke bro") { _, _ ->
+            setTitle("Oh no!")
+            setMessage("${message}. Please try again!")
+            setPositiveButton("Ok") { _, _ ->
                 //TODO
             }
             create()

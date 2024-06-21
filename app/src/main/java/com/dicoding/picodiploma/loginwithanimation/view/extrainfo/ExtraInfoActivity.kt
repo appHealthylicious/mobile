@@ -18,6 +18,7 @@ class ExtraInfoActivity : AppCompatActivity() {
     }
     private lateinit var binding: ActivityExtraInfoBinding
     private var updateObserver: Observer<UpdateResponse?>? = null
+    private var skip: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,16 +26,20 @@ class ExtraInfoActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         hideUI()
-        viewModel.getUid().observe(this, Observer { uid ->
-            println("Check UID: $uid")
-            if (uid.isNotEmpty()) {
-                viewModel.getUserProfile(uid)
-            }
-        })
+        if(skip.isEmpty()){
+            println("Is empty")
+            viewModel.getUid().observe(this, Observer { uid ->
+                println("Check UID: $uid")
+                if (uid.isNotEmpty()) {
+                    viewModel.getUserProfile(uid)
+                    observeProfileResult()
+                }
+                skip = "NO"
+            })
+        }
 
         hideUI()
         setupAction()
-        observeProfileResult()
     }
 
     private fun hideUI(){
@@ -49,14 +54,15 @@ class ExtraInfoActivity : AppCompatActivity() {
 
     private fun observeProfileResult() {
         viewModel.profileResult.observe(this, Observer { profileResponse ->
-            if (profileResponse?.userProfile?.username != "")  {
+            if (profileResponse?.userProfile?.username != "" && skip != "NO")  {
                 // Profile result is not null
                 val intent = Intent(this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
                 finish()
+            } else {
+                showUI()
             }
-            showUI()
         })
     }
     private fun setupAction() {
@@ -96,7 +102,7 @@ class ExtraInfoActivity : AppCompatActivity() {
         AlertDialog.Builder(this).apply {
             setTitle("Yeah!")
             setMessage("Data submitted successfully.")
-            setPositiveButton("Ok bro") { _, _ ->
+            setPositiveButton("Continue") { _, _ ->
                 val intent = Intent(context, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
@@ -110,8 +116,8 @@ class ExtraInfoActivity : AppCompatActivity() {
 
     private fun showFailDialog(message: String) {
         AlertDialog.Builder(this).apply {
-            setTitle("Tidak!")
-            setMessage("${message}. Silahkan coba lagi!")
+            setTitle("Oh no!")
+            setMessage("${message}. Please try again!")
             setPositiveButton("Oke bro") { _, _ ->
                 //TODO
             }

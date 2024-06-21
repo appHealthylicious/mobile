@@ -131,7 +131,7 @@ class SignupActivity : AppCompatActivity() {
 
                             binding.scViewSignUp.visibility = View.VISIBLE
                             binding.progressBar.visibility = View.GONE
-                            showFailDialog(registerResponse.message ?: "gagal register")
+                            showFailDialog(registerResponse.message ?: "Failed register")
                         }
                     }
                 }
@@ -149,8 +149,8 @@ class SignupActivity : AppCompatActivity() {
     private fun showSuccessDialog(email: String){
         AlertDialog.Builder(this).apply {
             setTitle("Yeah!")
-            setMessage("Akun dengan $email sudah jadi nih. Yuk, diet.")
-            setPositiveButton("Lanjut") { dialog, _ ->
+            setMessage("Your account with the email $email is created. Lets start cooking!.")
+            setPositiveButton("Continue") { dialog, _ ->
                 dialog.dismiss()
                 finish()
             }
@@ -161,9 +161,9 @@ class SignupActivity : AppCompatActivity() {
 
     private fun showFailDialog(message: String){
         AlertDialog.Builder(this).apply {
-            setTitle("Oh tidak!")
-            setMessage("Pembuatan akun gagal. Error: $message.")
-            setPositiveButton("Oke") { dialog, _ ->
+            setTitle("Oh no!")
+            setMessage("Failed to create account. Error: $message.")
+            setPositiveButton("Ok") { dialog, _ ->
                 dialog.dismiss()
             }
             create()
